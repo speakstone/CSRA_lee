@@ -32,9 +32,9 @@ def Args():
     parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
     # parser.add_argument("--img_size", default=[768, 768], type=list, help="h_w")
     parser.add_argument("--batch_size", default=86, type=int)
-    # parser.add_argument("--batch_size", default=8, type=int)
+    # parser.add_argument("--batch_size", default=4, type=int)
     # optimizer, default SGD
-    parser.add_argument("--lr", default=0.01, type=float)
+    parser.add_argument("--lr", default=0.0001, type=float)
     parser.add_argument("--momentum", default=0.9, type=float)
     parser.add_argument("--w_d", default=0.0001, type=float, help="weight_decay")
     parser.add_argument("--warmup_epoch", default=1, type=int)
@@ -90,8 +90,10 @@ def val(i, args, model, test_loader, test_file):
 
         with torch.no_grad():
             logit = model(img)
+            logit = torch.mean(logit, -1)
 
-        result = nn.Sigmoid()(logit).cpu().detach().numpy().tolist()
+        result = logit.cpu().detach().numpy().tolist()
+        # result = nn.Sigmoid()(logit).cpu().detach().numpy().tolist()
         for k in range(len(img_path)):
             result_list.append(
                 {

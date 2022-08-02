@@ -11,9 +11,12 @@ def json_map(cls_id, pred_json, ann_json, types):
     target = np.zeros((num), dtype=np.float64)
 
     for i in range(num):
-        if ann_json[i]["target"] == [0, 1]:
+        if i % 2000 == 0:
             print(pred_json[i]["scores"])
             print(ann_json[i]["target"])
+        # if ann_json[i]["target"] == [0, 1]:
+        #     print(pred_json[i]["scores"])
+        #     print(ann_json[i]["target"])
         predict[i] = pred_json[i]["scores"][cls_id]
         target[i] = ann_json[i]["target"][cls_id]
 

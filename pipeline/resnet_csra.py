@@ -138,10 +138,10 @@ class ResNet_CSRA_50(ResNet):
 
     def loss_func_lee(self, logit, target):
         logit = torch.mean(logit, -1)
-        loss_f = -1 * torch.sum((1 - target) * torch.log(logit)) / torch.sum((1 - target))
+        loss_f = -1 * torch.sum((1 - target) * torch.log(1-logit)) / torch.sum((1 - target))
         pred_t = torch.sum(target * logit, 1)
         loss_t = -1 * torch.mean(torch.log(pred_t))
-        return loss_f + loss_t
+        return loss_f+loss_t
 
     def forward_train_lee(self, x, target):
         x = self.backbone(x)

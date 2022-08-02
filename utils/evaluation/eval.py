@@ -67,11 +67,11 @@ def evaluation(result, types, ann_path, datadir= "", num_cls=8):
     pred_json = []
     ann_json = json_results
     for i in result:
+        i["scores"] = [i["scores"][0], 1 - i["scores"][0]]
         # dot = np.prod([1 - float(k) for k in i["scores"][1:]])
         # i["scores"] = [1 - dot, dot]
-        i["scores"] = [1-min(sum(i["scores"][1:]), 0.999999), min(sum(i["scores"][1:]), 0.99999)]
-
-        pred_json.append(i )
+        # i["scores"] = [1-min(sum(i["scores"][1:]), 0.999999), min(sum(i["scores"][1:]), 0.99999)]
+        pred_json.append(i)
     # 修改为@2分类@
     classes = classes[:2]
     for i, _ in enumerate(tqdm(classes)):

@@ -25,7 +25,7 @@ def Args():
     parser.add_argument("--dataset", default="Lane", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     parser.add_argument("--test_aug", default=[], type=list)
-    parser.add_argument("--img_size", default=[768,768], type=int)
+    parser.add_argument("--img_size", default=[224,224], type=int)
     parser.add_argument("--batch_size", default=4, type=int)
 
     args = parser.parse_args()
@@ -50,7 +50,10 @@ def val(args, model, test_loader, test_file):
             logit = model(img)
             logit = torch.mean(logit, -1)
 
-        result = nn.Sigmoid()(logit).cpu().detach().numpy().tolist()
+        # result = nn.Sigmoid()(logit).cpu().detach().numpy().tolist()
+        print(logit.shape)
+        result = logit.cpu().detach().numpy().tolist()
+
         for k in range(len(img_path)):
             result_list.append(
                 {
