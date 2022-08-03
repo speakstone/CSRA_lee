@@ -18,7 +18,7 @@ def Args():
     parser = argparse.ArgumentParser(description="settings")
     # model
     # parser.add_argument("--model", default="vit_B16_224")
-    parser.add_argument("--model", default="resnet50")
+    parser.add_argument("--model", default="resnet101")
     parser.add_argument("--num_heads", default=1, type=int)
     parser.add_argument("--lam",default=0.1, type=float)
     parser.add_argument("--cutmix", default=None, type=str) # the path to load cutmix-pretrained backbone
@@ -27,14 +27,14 @@ def Args():
     parser.add_argument("--datadir", default="/work/dataset/huawei_2022_2/train_image/labeled_data/", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     # parser.add_argument("--train_aug", default=["randomflip", "resizedcrop"], type=list)
-    parser.add_argument("--train_aug", default=[], type=list)
+    parser.add_argument("--train_aug", default=["rotate"], type=list)
     parser.add_argument("--test_aug", default=[], type=list)
-    parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
-    # parser.add_argument("--img_size", default=[768, 768], type=list, help="h_w")
-    parser.add_argument("--batch_size", default=86, type=int)
-    # parser.add_argument("--batch_size", default=4, type=int)
+    parser.add_argument("--img_size", default=[864, 512], type=list, help="h_w")
+    # parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
+    parser.add_argument("--batch_size", default=8, type=int)
+    # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
-    parser.add_argument("--lr", default=0.0001, type=float)
+    parser.add_argument("--lr", default=0.01, type=float)
     parser.add_argument("--momentum", default=0.9, type=float)
     parser.add_argument("--w_d", default=0.0001, type=float, help="weight_decay")
     parser.add_argument("--warmup_epoch", default=1, type=int)
@@ -139,7 +139,7 @@ def main():
     if args.dataset == "Lane":
         train_file = ['/work/dataset/huawei_2022_2/train_label/rows_train.npy']
         test_file = ['/work/dataset/huawei_2022_2/train_label/rows_test.npy']
-        step_size = 5
+        step_size = 5000
 
     train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset, args.datadir, args.num_cls, True)
     test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset, args.datadir, args.num_cls,  False)

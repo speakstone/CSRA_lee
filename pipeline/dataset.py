@@ -62,6 +62,9 @@ class DataSet(Dataset):
             t.append(transforms.ColorJitter(brightness=0.5, contrast=0.5, saturation=0.5, hue=0))
         if 'resizedcrop' in augs:
             t.append(transforms.RandomResizedCrop(img_size, scale=(0.7, 1.0)))
+        if "rotate" in augs:
+            t.append(transforms.RandomHorizontalFlip(p=0.2))
+            t.append(transforms.RandomVerticalFlip(p=0.2))
         # if 'RandAugment' in augs:
         #     t.append(RandAugment())
 
@@ -117,7 +120,7 @@ class DataSet(Dataset):
         json_len = [len(list(i)) for i in json_dict.values()]
         jlmax = max(json_len)
         for js, jl in zip(list(json_dict.values()), json_len):
-            js_ = js * min(jlmax // jl, 10)
+            js_ = js * min(jlmax // jl, 50)
             np.random.shuffle(js_)
             for js_i in js_:
                 json_list.append(json_npy[js_i])
@@ -129,10 +132,10 @@ class DataSet(Dataset):
     def __getitem__(self, idx):
         idx = idx % len(self)
         ann = self.anns[idx]
-        while not os.path.isfile(ann["img_path"]):
-            idx *= 2
-            idx = idx % len(self)
-            ann = self.anns[idx]
+        # while not os.path.isfile(ann["img_path"]):
+        #     idx *= 2
+        #     idx = idx % len(self)
+        #     ann = self.anns[idx]
         img = Image.open(ann["img_path"]).convert("RGB")
 
         if self.dataset == "wider":
@@ -145,12 +148,16 @@ class DataSet(Dataset):
                 "target": torch.Tensor(ann['target']),
                 "img": img_area
             }
-        if self.dataset == "Lane":
+        elif self.dataset == "Lane":
             # img.save("0.jpg")
             img = img.crop((0, 305, img.size[0], 2160))
             # img.save("1.jpg")
             img = self.augment(img)
             img = self.transform(img)
+
+            from torchvision import utils as vutils
+            vutils.save_image(img, "1.jpg")
+
             message = {
                 "img_path": ann["img_path"],
                 "target": torch.Tensor(np.array(ann["target"], dtype=np.float)),

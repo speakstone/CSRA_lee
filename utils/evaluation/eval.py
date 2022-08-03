@@ -47,6 +47,7 @@ class_dict = {
 def evaluation(result, types, ann_path, datadir= "", num_cls=8):
     print("Evaluation")
     classes = class_dict[types]
+    classes = classes[:1]
     aps = np.zeros(len(classes), dtype=np.float64)
 
     json_results = {}
@@ -59,21 +60,22 @@ def evaluation(result, types, ann_path, datadir= "", num_cls=8):
         #     target_i[int(i)] = 1
         # json_results[index]["target"] = np.array(target_i, dtype=np.int)
         if js[1] != "0":
-            json_results[index]["target"] = [0, 1]
+            json_results[index]["target"] = [0]
         else:
-            json_results[index]["target"] = [1, 0]
+            json_results[index]["target"] = [1]
 
     # pred_json = result
     pred_json = []
     ann_json = json_results
     for i in result:
-        i["scores"] = [i["scores"][0], 1 - i["scores"][0]]
+        i["scores"] = [i["scores"][0]]
+        # i["scores"] = [i["scores"][0], 1 - i["scores"][0]]
         # dot = np.prod([1 - float(k) for k in i["scores"][1:]])
         # i["scores"] = [1 - dot, dot]
         # i["scores"] = [1-min(sum(i["scores"][1:]), 0.999999), min(sum(i["scores"][1:]), 0.99999)]
         pred_json.append(i)
     # 修改为@2分类@
-    classes = classes[:2]
+
     for i, _ in enumerate(tqdm(classes)):
         ap = json_map(i, pred_json, ann_json, types)
         aps[i] = ap
