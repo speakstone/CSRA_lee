@@ -1,5 +1,6 @@
 import argparse
 import time
+import os
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -29,14 +30,14 @@ def Args():
     # parser.add_argument("--train_aug", default=["randomflip", "resizedcrop"], type=list)
     parser.add_argument("--train_aug", default=["rotate"], type=list)
     parser.add_argument("--test_aug", default=[], type=list)
-    parser.add_argument("--img_size", default=[864, 512], type=list, help="h_w")
+    parser.add_argument("--img_size", default=[640, 640], type=list, help="h_w")
     # parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
-    parser.add_argument("--batch_size", default=8, type=int)
+    parser.add_argument("--batch_size", default=6, type=int)
     # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
     parser.add_argument("--lr", default=0.01, type=float)
     parser.add_argument("--momentum", default=0.9, type=float)
-    parser.add_argument("--w_d", default=0.0001, type=float, help="weight_decay")
+    parser.add_argument("--w_d", default=0.01, type=float, help="weight_decay")
     parser.add_argument("--warmup_epoch", default=1, type=int)
     parser.add_argument("--total_epoch", default=50, type=int)
     parser.add_argument("--print_freq", default=100, type=int)
@@ -170,6 +171,8 @@ def main():
     # training and validation
     for i in range(1, args.total_epoch + 1):
         train(i, args, model, train_loader, optimizer, warmup_scheduler)
+        if not os.path.isdir("checkpoint"):
+            os.makedirs("checkpoint")
         torch.save(model.state_dict(), "checkpoint/{}/epoch_{}.pth".format(args.model, i))
         val(i, args, model, test_loader, test_file)
         scheduler.step()

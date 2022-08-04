@@ -63,8 +63,8 @@ class DataSet(Dataset):
         if 'resizedcrop' in augs:
             t.append(transforms.RandomResizedCrop(img_size, scale=(0.7, 1.0)))
         if "rotate" in augs:
-            t.append(transforms.RandomHorizontalFlip(p=0.2))
-            t.append(transforms.RandomVerticalFlip(p=0.2))
+            t.append(transforms.RandomHorizontalFlip(p=0.3))
+            t.append(transforms.RandomVerticalFlip(p=0.3))
         # if 'RandAugment' in augs:
         #     t.append(RandAugment())
 
