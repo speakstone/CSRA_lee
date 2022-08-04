@@ -65,13 +65,14 @@ class ResNet_CSRA(ResNet):
         return x
 
     def loss_func_lee(self, logit, target):
+
         target = target.unsqueeze(-1)
-        loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit)) / (torch.sum((1 - target)) + 0.0000001)
+        loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit + 0.0000001)) / (torch.sum((1 - target)) + 0.0000001)
         pred_t = torch.sum(target * (logit - 0.00000001), 1)
-        loss_t = -1 * torch.mean(torch.log(pred_t))
-        if loss_f+loss_t > 10:
-            print(logit)
-            print(target)
+        loss_t = -1 * torch.mean(torch.log(pred_t + 0.0000001))
+        if torch.isnan(loss_f) or torch.isnan(loss_t):
+            print(loss_f, loss_t, target.max())
+
         return loss_f+loss_t
 
     def forward_train_lee(self, x, target):
