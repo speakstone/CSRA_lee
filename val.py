@@ -19,13 +19,13 @@ def Args():
     parser.add_argument("--model", default="resnet101", type=str)
     parser.add_argument("--num_heads", default=1, type=int)
     parser.add_argument("--lam",default=0.1, type=float)
-    parser.add_argument("--load_from", default="checkpoint/resnet50/epoch_6.pth", type=str)
+    parser.add_argument("--load_from", default="checkpoint/resnet101/epoch_1.pth", type=str)
     # dataset
     parser.add_argument("--datadir", default="/work/dataset/huawei_2022_2/train_image/labeled_data/", type=str)
     parser.add_argument("--dataset", default="Lane", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     parser.add_argument("--test_aug", default=[], type=list)
-    parser.add_argument("--img_size", default=[224,224], type=int)
+    parser.add_argument("--img_size", default=[864, 512], type=int)
     parser.add_argument("--batch_size", default=4, type=int)
 
     args = parser.parse_args()
@@ -48,7 +48,12 @@ def val(args, model, test_loader, test_file):
 
         with torch.no_grad():
             logit = model(img)
-            logit = torch.mean(logit, -1)
+            logit_o = logit[:, 0:1, :]
+            logit_max = torch.max(logit_o, -1)[0]
+            logit_min = torch.min(logit_o, -1)[0]
+            logit_mean = torch.mean(logit_o, -1)
+            logit = logit_max * (logit_mean >= 0.5) + logit_min * (logit_mean < 0.5)
+            # logit = torch.mean(logit, -1)
 
         # result = nn.Sigmoid()(logit).cpu().detach().numpy().tolist()
         # print(logit.shape)

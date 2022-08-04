@@ -29,9 +29,9 @@ def Args():
     # parser.add_argument("--train_aug", default=["randomflip", "resizedcrop"], type=list)
     parser.add_argument("--train_aug", default=["rotate"], type=list)
     parser.add_argument("--test_aug", default=[], type=list)
-    # parser.add_argument("--img_size", default=[864, 512], type=list, help="h_w")
-    parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
-    parser.add_argument("--batch_size", default=64, type=int)
+    parser.add_argument("--img_size", default=[864, 512], type=list, help="h_w")
+    # parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
+    parser.add_argument("--batch_size", default=8, type=int)
     # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
     parser.add_argument("--lr", default=0.01, type=float)
