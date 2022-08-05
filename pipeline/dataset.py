@@ -120,7 +120,7 @@ class DataSet(Dataset):
         json_len = [len(list(i)) for i in json_dict.values()]
         jlmax = max(json_len)
         for js, jl in zip(list(json_dict.values()), json_len):
-            js_ = js * min(jlmax // jl, 50)
+            js_ = js * min(jlmax // jl, 20)
             np.random.shuffle(js_)
             for js_i in js_:
                 json_list.append(json_npy[js_i])

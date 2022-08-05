@@ -10,7 +10,7 @@ class CSRA(nn.Module): # one basic block
         self.lam = lam  # Lambda                        
         self.head = nn.Conv2d(input_dim, num_classes, 1, bias=False)
         self.softmax = nn.Softmax(dim=2)
-
+        self.Linear = nn.Linear(7, 4)
 
     def forward(self, x):
         # # x (B d H W)
@@ -28,22 +28,16 @@ class CSRA(nn.Module): # one basic block
         #
         # return base_logit + self.lam * att_logit
         score = self.head(x) / torch.norm(self.head.weight, dim=1, keepdim=True).transpose(0, 1)
-        score = score.flatten(2)
-
-        base_logit1 = torch.mean(score[..., ::4], dim=2)
-        base_logit2 = torch.mean(score[..., 1::4], dim=2)
-        base_logit3 = torch.mean(score[..., 2::4], dim=2)
-        base_logit4 = torch.mean(score[..., 3::4], dim=2)
-        base_logit = torch.stack((base_logit1, base_logit2, base_logit3, base_logit4), -1)
-
+        score = self.Linear(score)
+        base_logit = torch.mean(score, -2)
         if self.T == 99:  # max-pooling
             att_logit = torch.max(score, dim=2)[0]
         else:
             score_soft = self.softmax(score * self.T)
             att_logit = torch.sum(score * score_soft, dim=2)
+        # return base_logit + self.lam * att_logit.unsqueeze(-1)
+        return base_logit + self.lam * att_logit
 
-        return base_logit + self.lam * att_logit.unsqueeze(-1)
-    
 
 
 class MHA(nn.Module):  # multi-head attention

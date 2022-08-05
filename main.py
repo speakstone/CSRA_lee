@@ -28,14 +28,15 @@ def Args():
     parser.add_argument("--datadir", default="/work/dataset/huawei_2022_2/train_image/labeled_data/", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     # parser.add_argument("--train_aug", default=["randomflip", "resizedcrop"], type=list)
-    parser.add_argument("--train_aug", default=["rotate"], type=list)
+    # parser.add_argument("--train_aug", default=["rotate"], type=list)
+    parser.add_argument("--train_aug", default=[], type=list)
     parser.add_argument("--test_aug", default=[], type=list)
-    parser.add_argument("--img_size", default=[640, 640], type=list, help="h_w")
-    # parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
-    parser.add_argument("--batch_size", default=6, type=int)
+    # parser.add_argument("--img_size", default=[448, 448], type=list, help="h_w")
+    parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
+    parser.add_argument("--batch_size", default=64, type=int)
     # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
-    parser.add_argument("--lr", default=0.01, type=float)
+    parser.add_argument("--lr", default=0.0001, type=float)
     parser.add_argument("--momentum", default=0.9, type=float)
     parser.add_argument("--w_d", default=0.01, type=float, help="weight_decay")
     parser.add_argument("--warmup_epoch", default=1, type=int)
@@ -54,18 +55,20 @@ def train(i, args, model, train_loader, optimizer, warmup_scheduler):
         target = data['target'].cuda()
 
         optimizer.zero_grad()
-        logit, loss = model(img, target)
+        logit, loss, loss1, loss2 = model(img, target)
         loss = loss.mean()
         loss.backward()
         optimizer.step()
         t = time.time() - batch_begin
 
         if index % args.print_freq == 0:
-            print("Epoch {}[{}/{}]: loss:{:.5f}, lr:{:.5f}, time:{:.4f}".format(
+            print("Epoch {}[{}/{}]: loss:{:.5f},loss_lee:{:.5f}, loss_zero:{:.5f}, lr:{:.5f}, time:{:.4f}".format(
                 i, 
                 args.batch_size * (index + 1),
                 len(train_loader.dataset),
                 loss,
+                loss1,
+                loss2,
                 optimizer.param_groups[0]["lr"],
                 float(t)
             ))
@@ -140,7 +143,7 @@ def main():
     if args.dataset == "Lane":
         train_file = ['/work/dataset/huawei_2022_2/train_label/rows_train.npy']
         test_file = ['/work/dataset/huawei_2022_2/train_label/rows_test.npy']
-        step_size = 10000
+        step_size = 100
 
     train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset, args.datadir, args.num_cls, True)
     test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset, args.datadir, args.num_cls,  False)
