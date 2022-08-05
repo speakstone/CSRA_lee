@@ -16,10 +16,10 @@ def Args():
     parser = argparse.ArgumentParser(description="settings")
     parser.add_argument("--cutmix", default=None, type=str) # the path to load cutmix-pretrained backbone
     # model default resnet101
-    parser.add_argument("--model", default="resnet101", type=str)
+    parser.add_argument("--model", default="resnet50", type=str)
     parser.add_argument("--num_heads", default=1, type=int)
     parser.add_argument("--lam",default=0.1, type=float)
-    parser.add_argument("--load_from", default="checkpoint/resnet101/epoch_1.pth", type=str)
+    parser.add_argument("--load_from", default="checkpoint/resnet50/epoch_1.pth", type=str)
     # dataset
     parser.add_argument("--datadir", default="/work/dataset/huawei_2022_2/train_image/labeled_data/", type=str)
     parser.add_argument("--dataset", default="Lane", type=str)
@@ -104,7 +104,7 @@ def main():
     if args.dataset == "Lane":
         test_file = ["train_label_805/rows_test.npy"]
     test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset, args.datadir, args.num_cls,  False)
-    test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8)
+    test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=0)
     val(args, model, test_loader, test_file)
 
 

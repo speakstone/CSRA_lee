@@ -6,7 +6,8 @@ import os
 from tqdm import tqdm
 from .cal_mAP import json_map
 from .cal_PR import json_metric, metric, json_metric_top3
-
+from sklearn.metrics import auc
+from sklearn.metrics import roc_curve
 
 voc_classes = ("aeroplane", "bicycle", "bird", "boat", "bottle",
            "bus", "car", "cat", "chair", "cow", "diningtable",
@@ -44,6 +45,29 @@ class_dict = {
 
 
 
+#---自己按照公式实现
+def auc_calculate(labels,preds,n_bins=100):
+    postive_len = sum(labels)
+    negative_len = len(labels) - postive_len
+    total_case = postive_len * negative_len
+    pos_histogram = [0 for _ in range(n_bins)]
+    neg_histogram = [0 for _ in range(n_bins)]
+    bin_width = 1.0 / n_bins
+    for i in range(len(labels)):
+        nth_bin = int(preds[i]/bin_width)
+        if labels[i]==1:
+            pos_histogram[nth_bin] += 1
+        else:
+            neg_histogram[nth_bin] += 1
+    accumulated_neg = 0
+    satisfied_pair = 0
+    for i in range(n_bins):
+        satisfied_pair += (pos_histogram[i]*accumulated_neg + pos_histogram[i]*neg_histogram[i]*0.5)
+        accumulated_neg += neg_histogram[i]
+
+    return satisfied_pair / float(total_case)
+
+
 def evaluation(result, types, ann_path, datadir= "", num_cls=8):
     print("Evaluation")
     classes = class_dict[types]
@@ -56,9 +80,6 @@ def evaluation(result, types, ann_path, datadir= "", num_cls=8):
         json_results[index] = {}
         json_results[index]["img_path"] = os.path.join(datadir, js[0])
         target_i = np.zeros(num_cls)
-        # for i in js[1:]:
-        #     target_i[int(i)] = 1
-        # json_results[index]["target"] = np.array(target_i, dtype=np.int)
         if js[1] != "0":
             json_results[index]["target"] = [0]
         else:
@@ -74,15 +95,25 @@ def evaluation(result, types, ann_path, datadir= "", num_cls=8):
         # i["scores"] = [1 - dot, dot]
         # i["scores"] = [1-min(sum(i["scores"][1:]), 0.999999), min(sum(i["scores"][1:]), 0.99999)]
         pred_json.append(i)
-    # 修改为@2分类@
 
     for i, _ in enumerate(tqdm(classes)):
         ap = json_map(i, pred_json, ann_json, types)
         aps[i] = ap
     OP, OR, OF1, CP, CR, CF1 = json_metric(pred_json, ann_json, len(classes), types)
+
+    ro_gt = {i['img_path'].split(".")[0] : i['target'][0] for i in ann_json.values()}
+    ro_pred = {i['file_name'].split(".")[0] : i['scores'][0] for i in pred_json}
+    ro_gt_list = []
+    ro_pred_list = []
+    for sample in ro_gt.keys():
+        ro_gt_list.append(ro_gt[sample])
+        ro_pred_list.append(ro_pred[sample])
+    fpr, tpr, thresholds = roc_curve(ro_gt_list, ro_pred_list, pos_label=1)
+    print("-----ROC:", auc(fpr, tpr))
     print("mAP: {:4f}".format(np.mean(aps)))
     print("CP: {:4f}, CR: {:4f}, CF1 :{:4F}".format(CP, CR, CF1))
     print("OP: {:4f}, OR: {:4f}, OF1 {:4F}".format(OP, OR, OF1))
+
 
 
 

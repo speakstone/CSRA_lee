@@ -12,13 +12,13 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/CSRA_master$data_tain_test_crop.coverage" NAME="data_tain_test_crop Coverage Results" MODIFIED="1659709999404" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CSRA_master$val.coverage" NAME="val Coverage Results" MODIFIED="1659706319266" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CSRA_master$data_tain_test_crop.coverage" NAME="data_tain_test_crop Coverage Results" MODIFIED="1659711839817" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/CSRA_master$val.coverage" NAME="val Coverage Results" MODIFIED="1659712070036" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CSRA_master$dataset.coverage" NAME="dataset Coverage Results" MODIFIED="1658931430781" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/pipeline" />
     <SUITE FILE_PATH="coverage/CSRA_master$test.coverage" NAME="test Coverage Results" MODIFIED="1659701003489" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CSRA_master$label_get.coverage" NAME="label_get Coverage Results" MODIFIED="1659707242159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/CSRA_master$main.coverage" NAME="main Coverage Results" MODIFIED="1659707601641" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/CSRA_master$eval.coverage" NAME="eval Coverage Results" MODIFIED="1659320533821" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils/evaluation" />
+    <SUITE FILE_PATH="coverage/CSRA_master$eval.coverage" NAME="eval Coverage Results" MODIFIED="1659712065788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils/evaluation" />
   </component>
   <component name="FUSProjectUsageTrigger">
     <session id="1428065001">
@@ -37,7 +37,7 @@
         <counts>
           <entry key="csv" value="1" />
           <entry key="md" value="2" />
-          <entry key="py" value="72" />
+          <entry key="py" value="78" />
           <entry key="pyi" value="1" />
         </counts>
       </usages-collector>
@@ -46,32 +46,32 @@
           <entry key="Markdown" value="2" />
           <entry key="PLAIN_TEXT" value="1" />
           <entry key="PyRemoteDebug" value="7" />
-          <entry key="Python" value="65" />
+          <entry key="Python" value="71" />
           <entry key="PythonStub" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="1945" />
+          <entry key="Python Console" value="1957" />
           <entry key="md" value="364" />
-          <entry key="py" value="4146" />
+          <entry key="py" value="4305" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="Markdown" value="364" />
-          <entry key="Python" value="6091" />
+          <entry key="Python" value="6262" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="267">
-              <caret line="38" column="43" lean-forward="true" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+            <state relative-caret-position="289">
+              <caret line="108" column="10" lean-forward="true" selection-start-line="108" selection-start-column="10" selection-end-line="108" selection-end-column="10" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -82,8 +82,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline/resnet_csra.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1606">
-              <caret line="155" column="41" selection-start-line="155" selection-start-column="41" selection-end-line="155" selection-end-column="41" />
+            <state relative-caret-position="345">
+              <caret line="223" selection-start-line="223" selection-end-line="223" />
               <folding>
                 <marker date="1659707598105" expanded="true" signature="2062:2597" ph="..." />
               </folding>
@@ -92,34 +92,13 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline/vit_csra.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="120" column="37" lean-forward="true" selection-start-line="120" selection-start-column="37" selection-end-line="120" selection-end-column="37" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/pipeline/csra.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="782">
+            <state relative-caret-position="331">
               <caret line="88" selection-start-line="88" selection-end-line="88" />
               <folding>
                 <marker date="1659704832950" expanded="true" signature="660:661" ph="..." />
                 <marker date="1659704832950" expanded="true" signature="660:669" ph="..." />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/pipeline/dataset.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="48">
-              <caret line="78" column="53" selection-start-line="78" selection-start-column="41" selection-end-line="78" selection-end-column="53" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -137,11 +116,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/val.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="188">
-              <caret line="104" column="37" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="37" />
+            <state relative-caret-position="411">
+              <caret line="60" column="28" lean-forward="true" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -150,9 +129,30 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/evaluation/cal_PR.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="88">
+              <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/utils/evaluation/cal_mAP.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="220">
+              <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/label_get.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="254">
+            <state relative-caret-position="331">
               <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
@@ -164,8 +164,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/data_tain_test_crop.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="88">
-              <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="45" />
+            <state relative-caret-position="133">
+              <caret line="30" column="8" selection-start-line="30" selection-end-line="30" selection-end-column="8" />
               <folding>
                 <element signature="e#0#10#0" expanded="true" />
               </folding>
@@ -216,7 +216,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/utils/evaluation/eval.py" />
         <option value="$PROJECT_DIR$/utils/evaluation/cal_mAP.py" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/pipeline/dataset.py" />
@@ -224,9 +223,12 @@
         <option value="$PROJECT_DIR$/label_get.py" />
         <option value="$PROJECT_DIR$/pipeline/resnet_csra.py" />
         <option value="$PROJECT_DIR$/data_tain_test_crop.py" />
-        <option value="$PROJECT_DIR$/val.py" />
         <option value="$PROJECT_DIR$/test.py" />
         <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/checkpoint/a.py" />
+        <option value="$PROJECT_DIR$/val.py" />
+        <option value="$PROJECT_DIR$/utils/evaluation/cal_PR.py" />
+        <option value="$PROJECT_DIR$/utils/evaluation/eval.py" />
       </list>
     </option>
   </component>
@@ -254,6 +256,11 @@
             <path>
               <item name="CSRA-master" type="b2602c69:ProjectViewProjectNode" />
               <item name="CSRA-master" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="CSRA-master" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CSRA-master" type="462c0819:PsiDirectoryNode" />
+              <item name="checkpoint" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -286,7 +293,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.data_tain_test_crop">
+  <component name="RunManager" selected="Python.val">
     <configuration name="data_tain_test_crop" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CSRA-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -301,6 +308,28 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/data_tain_test_crop.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="eval" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="CSRA-master" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/utils/evaluation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/utils/evaluation/eval.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -353,28 +382,6 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true">
-      <module name="CSRA-master" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <configuration name="val" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="CSRA-master" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -401,16 +408,16 @@
       <item itemvalue="Python.main" />
       <item itemvalue="Python.val" />
       <item itemvalue="Python.label_get" />
-      <item itemvalue="Python.test" />
       <item itemvalue="Python.data_tain_test_crop" />
+      <item itemvalue="Python.eval" />
     </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.val" />
+        <item itemvalue="Python.eval" />
         <item itemvalue="Python.data_tain_test_crop" />
         <item itemvalue="Python.main" />
         <item itemvalue="Python.label_get" />
-        <item itemvalue="Python.val" />
-        <item itemvalue="Python.test" />
       </list>
     </recent_temporary>
   </component>
@@ -440,12 +447,12 @@
     <frame x="-7" y="-7" width="2062" height="1126" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.13572854" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.13572854" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32997987" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.499501" visible="true" weight="0.45015106" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.499501" visible="true" weight="0.45015106" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4390735" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -505,16 +512,6 @@
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/evaluation/cal_mAP.py</url>
-          <line>7</line>
-          <option name="timeStamp" value="51" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/utils/evaluation/eval.py</url>
-          <line>70</line>
-          <option name="timeStamp" value="52" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/test.py</url>
           <line>69</line>
           <option name="timeStamp" value="58" />
@@ -530,24 +527,14 @@
           <option name="timeStamp" value="85" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/val.py</url>
-          <line>49</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pipeline/csra.py</url>
-          <line>42</line>
-          <option name="timeStamp" value="92" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/pipeline/csra.py</url>
-          <line>64</line>
-          <option name="timeStamp" value="93" />
+          <url>file://$PROJECT_DIR$/utils/evaluation/eval.py</url>
+          <line>110</line>
+          <option name="timeStamp" value="96" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/data_tain_test_crop.py</url>
-          <line>18</line>
-          <option name="timeStamp" value="95" />
+          <line>40</line>
+          <option name="timeStamp" value="97" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -609,30 +596,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/evaluation/eval.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="57" column="16" selection-start-line="57" selection-start-column="16" selection-end-line="57" selection-end-column="16" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$APPLICATION_HOME_DIR$/helpers/typeshed/stdlib/2and3/argparse.pyi">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="213">
           <caret line="58" column="21" selection-start-line="58" selection-start-column="21" selection-end-line="58" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/evaluation/cal_mAP.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" column="45" lean-forward="true" selection-start-line="17" selection-start-column="45" selection-end-line="17" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -684,34 +651,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/.PyCharm2018.2/system/remote_sources/-1149484744/1854661201/torch/nn/modules/module.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="945" column="36" lean-forward="true" selection-start-line="945" selection-start-column="36" selection-end-line="945" selection-end-column="36" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/resnet_csra.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1606">
-          <caret line="155" column="41" selection-start-line="155" selection-start-column="41" selection-end-line="155" selection-end-column="41" />
-          <folding>
-            <marker date="1659707598105" expanded="true" signature="2062:2597" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/pipeline/csra.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="782">
-          <caret line="88" selection-start-line="88" selection-end-line="88" />
-          <folding>
-            <marker date="1659704832950" expanded="true" signature="660:661" ph="..." />
-            <marker date="1659704832950" expanded="true" signature="660:669" ph="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/.PyCharm2018.2/system/remote_sources/-1149484744/1450702893/random.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="144">
@@ -729,36 +668,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/data_tain_test_crop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="13" lean-forward="true" selection-start-line="4" selection-start-column="13" selection-end-line="4" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/label_get.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="254">
-          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/val.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="188">
-          <caret line="104" column="37" selection-start-line="104" selection-start-column="22" selection-end-line="104" selection-end-column="37" />
-          <folding>
-            <element signature="e#0#15#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="330">
@@ -769,10 +678,98 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/checkpoint/a.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/csra.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="88" selection-start-line="88" selection-end-line="88" />
+          <folding>
+            <marker date="1659704832950" expanded="true" signature="660:661" ph="..." />
+            <marker date="1659704832950" expanded="true" signature="660:669" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pipeline/resnet_csra.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="223" selection-start-line="223" selection-end-line="223" />
+          <folding>
+            <marker date="1659707598105" expanded="true" signature="2062:2597" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2018.2/system/remote_sources/-1149484744/1854661201/torch/nn/modules/module.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="888" selection-start-line="888" selection-end-line="888" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="267">
-          <caret line="38" column="43" lean-forward="true" selection-start-line="38" selection-start-column="43" selection-end-line="38" selection-end-column="43" />
+        <state relative-caret-position="289">
+          <caret line="108" column="10" lean-forward="true" selection-start-line="108" selection-start-column="10" selection-end-line="108" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/evaluation/cal_mAP.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="32" lean-forward="true" selection-start-line="10" selection-start-column="32" selection-end-line="10" selection-end-column="32" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/evaluation/cal_PR.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/label_get.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="37" lean-forward="true" selection-start-line="37" selection-end-line="37" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/data_tain_test_crop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="133">
+          <caret line="30" column="8" selection-start-line="30" selection-end-line="30" selection-end-column="8" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/utils/evaluation/eval.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="327">
+          <caret line="97" lean-forward="true" selection-start-line="97" selection-end-line="97" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/val.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="60" column="28" lean-forward="true" selection-start-line="60" selection-start-column="28" selection-end-line="60" selection-end-column="28" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
