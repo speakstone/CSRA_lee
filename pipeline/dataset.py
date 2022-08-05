@@ -113,7 +113,7 @@ class DataSet(Dataset):
         :return:
         """
         json_list = []
-        json_dict = {str(i) : [] for i in range(self.num_cls)}
+        json_dict = {str(i): [] for i in range(self.num_cls)}
         for index, j_i in enumerate(json_npy):
             for cls in j_i[1:]:
                 json_dict[cls].append(index)
@@ -154,10 +154,8 @@ class DataSet(Dataset):
             # img.save("1.jpg")
             img = self.augment(img)
             img = self.transform(img)
-
             from torchvision import utils as vutils
             vutils.save_image(img, "1.jpg")
-
             message = {
                 "img_path": ann["img_path"],
                 "target": torch.Tensor(np.array(ann["target"], dtype=np.float)),

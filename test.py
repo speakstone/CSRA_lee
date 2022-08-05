@@ -26,7 +26,7 @@ def Args():
     parser.add_argument("--dataset", default="Lane", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     parser.add_argument("--test_aug", default=[], type=list)
-    parser.add_argument("--img_size", default=[864, 512], type=int)
+    parser.add_argument("--img_size", default=[640, 640], type=int)
     parser.add_argument("--batch_size", default=4, type=int)
 
     args = parser.parse_args()

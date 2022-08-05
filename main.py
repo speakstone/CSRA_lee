@@ -32,8 +32,8 @@ def Args():
     parser.add_argument("--train_aug", default=[], type=list)
     parser.add_argument("--test_aug", default=[], type=list)
     # parser.add_argument("--img_size", default=[448, 448], type=list, help="h_w")
-    parser.add_argument("--img_size", default=[640, 640], type=list, help="h_w")
-    parser.add_argument("--batch_size", default=8, type=int)
+    parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
+    parser.add_argument("--batch_size", default=64, type=int)
     # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
     parser.add_argument("--lr", default=0.001, type=float)
@@ -143,7 +143,7 @@ def main():
     if args.dataset == "Lane":
         train_file = ['/work/dataset/huawei_2022_2/train_label/rows_train.npy']
         test_file = ['/work/dataset/huawei_2022_2/train_label/rows_test.npy']
-        step_size = 100
+        step_size = 1
 
     train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset, args.datadir, args.num_cls, True)
     test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset, args.datadir, args.num_cls,  False)

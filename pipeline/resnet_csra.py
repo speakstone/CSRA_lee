@@ -19,8 +19,6 @@ model_urls = {
 
 
 
-
-
 class ResNet_CSRA(ResNet):
     arch_settings = {
         18: (BasicBlock, (2, 2, 2, 2)),
@@ -81,15 +79,14 @@ class ResNet_CSRA(ResNet):
         return self.loss_ce(logit_m, target_m)
 
     def loss_func_lee(self, logit, target):
-
         target = target.unsqueeze(-1)
         loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit + 0.0000001)) / (torch.sum((1 - target)) + 0.0000001)
         pred_t = torch.sum(target * (logit - 0.00000001), 1)
         loss_t = -1 * torch.mean(torch.log(pred_t + 0.0000001))
-        if torch.isnan(loss_f) or torch.isnan(loss_t):
-            print(loss_f, loss_t, target.max())
+        # if torch.isnan(loss_f) or torch.isnan(loss_t):
+        #     print(loss_f, loss_t, target.max())
 
-        return loss_f
+        return (loss_f + loss_t) / 2
 
     def forward_train_lee(self, x, target):
         x = self.backbone(x)
@@ -180,24 +177,38 @@ class ResNet_CSRA_50(ResNet):
         x = self.classifier(x)
         return x
 
+    def loss_func_zeros(self, logit, target):
+        logit_t = torch.sum(logit[:, 1:, :], -2)
+        logit_f = torch.sum(logit[:, :1, :], -2)
+        logit_s = torch.stack((logit_f, logit_t), -1)
+        logit_m = torch.mean(logit_s, 1)
+
+        target = target.unsqueeze(-1)
+        target_t = torch.sum(target[:, 1:, :], -2)
+        target_f = torch.sum(target[:, :1, :], -2)
+        target_s = torch.stack((target_f , target_t), -1)
+        target_m = torch.mean(target_s, 1)
+        target_m = torch.argmax(target_m, -1)
+
+        return self.loss_ce(logit_m, target_m)
+
     def loss_func_lee(self, logit, target):
         target = target.unsqueeze(-1)
-        loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit)) / (torch.sum((1 - target)) + 0.00001)
+        loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit + 0.0000001)) / (torch.sum((1 - target)) + 0.0000001)
+        pred_t = torch.sum(target * (logit - 0.00000001), 1)
+        loss_t = -1 * torch.mean(torch.log(pred_t + 0.0000001))
 
-        # logit = torch.mean(logit, -1)
-        # loss_f = -1 * torch.sum((1 - target) * torch.log(1-logit)) / torch.sum((1 - target))
-        pred_t = torch.sum(target * logit - 0.00001 , 1)
-        loss_t = -1 * torch.mean(torch.log(pred_t))
-
-        return loss_f+loss_t
+        return (loss_f + loss_t) / 2
 
     def forward_train_lee(self, x, target):
         x = self.backbone(x)
         logit = self.classifier(x)
         logit = self.softxmax(logit)
         # loss = self.loss_func(logit, target, reduction="mean")
-        loss = self.loss_func_lee(logit, target)
-        return logit, loss
+        loss1 = self.loss_func_lee(logit, target)
+        loss2 = self.loss_func_zeros(logit, target)
+        loss = (loss1 + loss2)/2
+        return logit, loss, loss1, loss2
 
     def forward_test_lee(self, x):
         x = self.backbone(x)
