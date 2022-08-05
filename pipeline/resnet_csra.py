@@ -95,7 +95,8 @@ class ResNet_CSRA(ResNet):
         # loss = self.loss_func(logit, target, reduction="mean")
         loss1 = self.loss_func_lee(logit, target)
         loss2 = self.loss_func_zeros(logit, target)
-        loss = (loss1 + loss2)/2
+        # loss = (loss1 + loss2)/2
+        loss = loss1
         return logit, loss, loss1, loss2
 
     def forward_test_lee(self, x):
@@ -151,6 +152,7 @@ class ResNet_CSRA_50(ResNet):
 
         self.classifier = MHA(num_heads, lam, input_dim, num_classes)
         self.loss_func = F.binary_cross_entropy_with_logits
+        self.loss_ce = nn.CrossEntropyLoss()
         self.softxmax = nn.Softmax(dim=1)
 
     def backbone(self, x):
@@ -189,7 +191,6 @@ class ResNet_CSRA_50(ResNet):
         target_s = torch.stack((target_f , target_t), -1)
         target_m = torch.mean(target_s, 1)
         target_m = torch.argmax(target_m, -1)
-
         return self.loss_ce(logit_m, target_m)
 
     def loss_func_lee(self, logit, target):

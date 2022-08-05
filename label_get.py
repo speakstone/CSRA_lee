@@ -27,14 +27,14 @@ with open("submission.csv", "r") as f:
         ff_list.append(rr)
 
 ff_to_list = []
-ff_to_list.append(ff_list[0])
-for ii in ff_list[1:]:
-    if float(ii[1]) > 0.9:
-        ff_to_list.append([ii[0], "0.999999999"])
-    elif float(ii[1]) < 0.1:
-        ff_to_list.append([ii[0], "0.0000001"])
-    else:
-        ff_to_list.append(ii)
+for ii in ff_list:
+    # if float(ii[1]) > 0.9:
+    #     ff_to_list.append([ii[0], "0.999999999"])
+    # elif float(ii[1]) < 0.1:
+    #     ff_to_list.append([ii[0], "0.0000001"])
+    # else:
+    #     ff_to_list.append(ii)
+    ff_to_list.append([ii[0], float(np.random.random() * 0.0001)])
 
 
 with open("submission.csv", 'w+', encoding='utf-8', newline='') as f:

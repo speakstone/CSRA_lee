@@ -22,7 +22,7 @@ def Args():
     parser.add_argument("--load_from", default="checkpoint/resnet101/epoch_1.pth", type=str)
     # dataset
     parser.add_argument("--datadir", default="/work/dataset/huawei_2022_2/test_images/", type=str)
-    parser.add_argument("--csv", default="/work/dataset/huawei_2022_2/submission.csv", type=str)
+    parser.add_argument("--csv", default="train_label_805/submission.csv", type=str)
     parser.add_argument("--dataset", default="Lane", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     parser.add_argument("--test_aug", default=[], type=list)

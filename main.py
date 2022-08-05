@@ -19,7 +19,7 @@ def Args():
     parser = argparse.ArgumentParser(description="settings")
     # model
     # parser.add_argument("--model", default="vit_B16_224")
-    parser.add_argument("--model", default="resnet101")
+    parser.add_argument("--model", default="resnet50")
     parser.add_argument("--num_heads", default=1, type=int)
     parser.add_argument("--lam",default=0.1, type=float)
     parser.add_argument("--cutmix", default=None, type=str) # the path to load cutmix-pretrained backbone
@@ -36,7 +36,7 @@ def Args():
     parser.add_argument("--batch_size", default=64, type=int)
     # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
-    parser.add_argument("--lr", default=0.001, type=float)
+    parser.add_argument("--lr", default=0.01, type=float)
     parser.add_argument("--momentum", default=0.9, type=float)
     parser.add_argument("--w_d", default=0.01, type=float, help="weight_decay")
     parser.add_argument("--warmup_epoch", default=1, type=int)
@@ -141,8 +141,8 @@ def main():
         step_size = 5
         args.train_aug = ["randomflip"]
     if args.dataset == "Lane":
-        train_file = ['/work/dataset/huawei_2022_2/train_label/rows_train.npy']
-        test_file = ['/work/dataset/huawei_2022_2/train_label/rows_test.npy']
+        train_file = ["train_label_805/rows_train.npy"]
+        test_file = ["train_label_805/rows_test.npy"]
         step_size = 1
 
     train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset, args.datadir, args.num_cls, True)
@@ -163,7 +163,7 @@ def main():
             {'params': classifier, 'lr': args.lr * 10}
         ],
         momentum=args.momentum, weight_decay=args.w_d)    
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=0.1)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=0.5)
     
     iter_per_epoch = len(train_loader)
     if args.warmup_epoch > 0:

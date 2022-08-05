@@ -102,9 +102,7 @@ def main():
     if args.dataset == "wider":
         test_file = ['data/wider/test_wider.json']
     if args.dataset == "Lane":
-        train_file = ['/work/dataset/huawei_2022_2/train_label/rows_train.npy']
-        test_file = ['/work/dataset/huawei_2022_2/train_label/rows_test.npy']
-        step_size = 5
+        test_file = ["train_label_805/rows_test.npy"]
     test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset, args.datadir, args.num_cls,  False)
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8)
     val(args, model, test_loader, test_file)
