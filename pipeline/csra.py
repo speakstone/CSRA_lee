@@ -7,10 +7,12 @@ class CSRA(nn.Module): # one basic block
     def __init__(self, input_dim, num_classes, T, lam):
         super(CSRA, self).__init__()
         self.T = T      # temperature       
-        self.lam = lam  # Lambda                        
-        self.head = nn.Conv2d(input_dim, num_classes, 1, bias=False)
+        self.lam = lam  # Lambda
+        self.num_classes = num_classes
+        self.head = nn.Conv2d(input_dim, num_classes * 4, 1, bias=False)
+
+
         self.softmax = nn.Softmax(dim=2)
-        self.Linear = nn.Linear(7, 4)
 
     def forward(self, x):
         # # x (B d H W)
@@ -28,13 +30,15 @@ class CSRA(nn.Module): # one basic block
         #
         # return base_logit + self.lam * att_logit
         score = self.head(x) / torch.norm(self.head.weight, dim=1, keepdim=True).transpose(0, 1)
-        score = self.Linear(score)
-        base_logit = torch.mean(score, -2)
+        score = score.flatten(2)
+        score = torch.stack(torch.chunk(score, 4, 1), 2)
+        base_logit = torch.mean(score, -1)
+        # return base_logit
         if self.T == 99:  # max-pooling
-            att_logit = torch.max(score, dim=2)[0]
+            att_logit = torch.max(score, dim=-1)[0]
         else:
             score_soft = self.softmax(score * self.T)
-            att_logit = torch.sum(score * score_soft, dim=2)
+            att_logit = torch.sum(score * score_soft, dim=-1)
         # return base_logit + self.lam * att_logit.unsqueeze(-1)
         return base_logit + self.lam * att_logit
 
