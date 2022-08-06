@@ -67,16 +67,25 @@ class ResNet_CSRA(ResNet):
         logit_t = torch.sum(logit[:, 1:, :], -2)
         logit_f = torch.sum(logit[:, :1, :], -2)
         logit_s = torch.stack((logit_f, logit_t), -1)
-        logit_m = torch.mean(logit_s, 1)
 
         target = target.unsqueeze(-1)
         target_t = torch.sum(target[:, 1:, :], -2)
         target_f = torch.sum(target[:, :1, :], -2)
-        target_s = torch.stack((target_f , target_t), -1)
-        target_m = torch.mean(target_s, 1)
-        target_m = torch.argmax(target_m, -1)
+        target_s = torch.stack((target_f, target_t), -1)
 
-        return self.loss_ce(logit_m, target_m)
+        # 设置最大值最小值
+        target_s[target_s > 0] = 1
+        logit_s[logit_s < 0.0000001] = 0.0000001
+        logit_s[logit_s > 0.9999999] = 0.9999999
+
+        loss_l = -1 * torch.mean(target_s * torch.log(logit_s) + (1 - target_s) * torch.log(1 - logit_s))
+
+        # target_m = torch.mean(target_s, 1)
+        # target_m = torch.argmax(target_m, -1)
+        # logit_m = torch.mean(logit_s, 1)
+        # loss_ce = self.loss_ce(logit_m, target_m)
+
+        return loss_l
 
     def loss_func_lee(self, logit, target):
         target = target.unsqueeze(-1)
@@ -95,8 +104,8 @@ class ResNet_CSRA(ResNet):
         # loss = self.loss_func(logit, target, reduction="mean")
         loss1 = self.loss_func_lee(logit, target)
         loss2 = self.loss_func_zeros(logit, target)
-        # loss = (loss1 + loss2)/2
-        loss = loss1
+        loss = loss1 + 0.5 * loss2
+        # loss = loss1
         return logit, loss, loss1, loss2
 
     def forward_test_lee(self, x):
@@ -208,7 +217,8 @@ class ResNet_CSRA_50(ResNet):
         # loss = self.loss_func(logit, target, reduction="mean")
         loss1 = self.loss_func_lee(logit, target)
         loss2 = self.loss_func_zeros(logit, target)
-        loss = (loss1 + loss2)/2
+        # loss = (loss1 + loss2)/2
+        loss = loss1 + loss2
         return logit, loss, loss1, loss2
 
     def forward_test_lee(self, x):
