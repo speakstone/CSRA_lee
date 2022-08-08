@@ -63,8 +63,10 @@ class DataSet(Dataset):
         if 'resizedcrop' in augs:
             t.append(transforms.RandomResizedCrop(img_size, scale=(0.7, 1.0)))
         if "rotate" in augs:
-            t.append(transforms.RandomHorizontalFlip(p=0.3))
-            t.append(transforms.RandomVerticalFlip(p=0.3))
+            t.append(transforms.RandomHorizontalFlip(p=0.5))
+            t.append(transforms.RandomVerticalFlip(p=0.5))
+            # t.append(transforms.RandomRotation((-5, 5), expand=True))
+
         # if 'RandAugment' in augs:
         #     t.append(RandAugment())
 
@@ -85,22 +87,11 @@ class DataSet(Dataset):
                 json_results[index] = {}
                 json_results[index]["img_path"] = os.path.join(self.datadir, js[0])
                 target_i = np.zeros(self.num_cls)
-                for i in js[1:]:
-                    target_i[int(i)] = 1
+                target_i[int(np.random.choice(js[1:]))] = 1
+                # for i in js[1:]:
+                #     target_i[int(i)] = 1
                 json_results[index]["target"] = np.array(target_i, dtype=np.int)
 
-            # with open(ann_file, 'r', encoding="utf-8") as f:
-            #     reader = csv.reader(f)
-            #     for index, item in enumerate(reader):
-            #         # 忽略第一行
-            #         if reader.line_num == 1:
-            #             continue
-            #         json_results[index] = {}
-            #         json_results[index]["img_path"] = os.path.join(self.datadir, item[0])
-            #         target_i = np.zeros(self.num_cls)
-            #         for i in item[1].split(","):
-            #             target_i[int(i)] = 1
-            #         json_results[index]["target"] = np.array(target_i, dtype=np.int)
             anns_len = len(self.anns)
             for key, value in json_results.items():
                 self.anns[key+anns_len] = value
@@ -132,10 +123,6 @@ class DataSet(Dataset):
     def __getitem__(self, idx):
         idx = idx % len(self)
         ann = self.anns[idx]
-        # while not os.path.isfile(ann["img_path"]):
-        #     idx *= 2
-        #     idx = idx % len(self)
-        #     ann = self.anns[idx]
         img = Image.open(ann["img_path"]).convert("RGB")
 
         if self.dataset == "wider":
@@ -150,18 +137,26 @@ class DataSet(Dataset):
             }
         elif self.dataset == "Lane":
             # img.save("0.jpg")
-            img = img.crop((0, 305, img.size[0], 2160))
-            # img.save("1.jpg")
+            h, w = img.size
+            if (w, h) == (1560, 720):
+                img = img.crop((0, 200, 720, 1270))
+
+            elif (w, h) == (2340, 1080):
+                img = img.crop((0, 270, 1080, 2030))
+
+            elif (w, h) == (2400, 1080):
+                img = img.crop((0, 320, 1080, 1980))
+
             img = self.augment(img)
             img = self.transform(img)
-            from torchvision import utils as vutils
-            vutils.save_image(img, "1.jpg")
+            # from torchvision import utils as vutils
+            # vutils.save_image(img, "1.jpg")
             message = {
                 "img_path": ann["img_path"],
                 "target": torch.Tensor(np.array(ann["target"], dtype=np.float)),
                 "img": img
             }
-        else: # voc and coco
+        else:# voc and coco
             img = self.augment(img)
             img = self.transform(img)
             message = {
@@ -171,9 +166,3 @@ class DataSet(Dataset):
             }
 
         return message
-        # finally, if we use dataloader to get the data, we will get
-        # {
-        #     "img_path": list, # length = batch_size
-        #     "target": Tensor, # shape: batch_size * num_classes
-        #     "img": Tensor, # shape: batch_size * 3 * 224 * 224
-        # }

@@ -217,6 +217,10 @@ class VIT_CSRA(nn.Module):
 
         self.loss_func = F.binary_cross_entropy_with_logits
 
+        self.softxmax = nn.Softmax(dim=1)
+        self.denom = 0.0000001
+        self.maxom = 0.9999999
+
     def _init_weights(self, m):
         if isinstance(m, nn.Linear):
             trunc_normal_(m.weight, std=.02)
@@ -245,8 +249,51 @@ class VIT_CSRA(nn.Module):
         b, hw, c = x.shape
         x = x.transpose(1, 2)
         x = x.reshape(b, c, self.HW, self.HW)
-
         return x
+
+    def loss_func_zeros(self, logit, target):
+        logit_t = torch.sum(logit[:, 1:], -1)
+        logit_f = torch.sum(logit[:, :1], -1)
+        logit_s = torch.stack((logit_f, logit_t), -1)
+
+
+        target_t = torch.sum(target[:, 1:], -1)
+        target_f = torch.sum(target[:, :1], -1)
+        target_s = torch.stack((target_f, target_t), -1)
+
+        # 设置最大值最小值
+        target_s[target_s > 0] = 1
+        logit_s[logit_s < self.denom] = self.denom
+        logit_s[logit_s > self.maxom] = self.maxom
+
+        loss_l = -1 * torch.mean(target_s * torch.log(logit_s) + (1 - target_s) * torch.log(1 - logit_s))
+        return loss_l
+
+    def loss_focal_lee(self, logit, target, a=0.25, y=2):
+
+
+        #  (1-a)*(logit)^^y*log(1 - logit)* (1 -target)
+        loss_f = -1 * (1-a) * torch.pow(logit, y) * torch.log(1 - logit + self.denom) * (1 -target)
+        loss_t = -1 * (a) * torch.pow(1 - logit, y) * torch.log(logit + self.denom) * (target)
+
+        loss = torch.mean(loss_f + loss_t)
+
+        return loss
+
+    def forward_train_lee(self, x, target):
+        x = self.backbone(x)
+        logit = self.classifier(x)
+        logit = self.softxmax(logit)
+        loss2 = self.loss_func_zeros(logit, target)
+        loss1 = self.loss_focal_lee(logit, target)
+        loss = 10 * loss1 + loss2
+        return logit, loss, loss1, loss2
+
+    def forward_test_lee(self, x):
+        x = self.backbone(x)
+        x = self.classifier(x)
+        logit = self.softxmax(x)
+        return logit
 
     def forward_train(self, x, target):
         x = self.backbone(x)
@@ -261,9 +308,9 @@ class VIT_CSRA(nn.Module):
 
     def forward(self, x, target=None):
         if target is not None:
-            return self.forward_train(x, target)
+            return self.forward_train_lee(x, target)
         else:
-            return self.forward_test(x)
+            return self.forward_test_lee(x)
     
 
         

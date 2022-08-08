@@ -5,7 +5,7 @@
       <paths name="root@127.0.0.01:7020">
         <serverdata>
           <mappings>
-            <mapping deploy="/work/CSRA-master" local="$PROJECT_DIR$" />
+            <mapping deploy="/work/CSRA-master_vit" local="$PROJECT_DIR$" />
           </mappings>
         </serverdata>
       </paths>

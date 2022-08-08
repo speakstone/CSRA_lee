@@ -19,7 +19,7 @@ def Args():
     parser = argparse.ArgumentParser(description="settings")
     # model
     # parser.add_argument("--model", default="vit_B16_224")
-    parser.add_argument("--model", default="resnet50")
+    parser.add_argument("--model", default="vit_B16_224")
     parser.add_argument("--num_heads", default=1, type=int)
     parser.add_argument("--lam",default=0.1, type=float)
     parser.add_argument("--cutmix", default=None, type=str) # the path to load cutmix-pretrained backbone
@@ -28,25 +28,27 @@ def Args():
     parser.add_argument("--datadir", default="/work/dataset/huawei_2022_2/train_image/labeled_data/", type=str)
     parser.add_argument("--num_cls", default=8, type=int)
     # parser.add_argument("--train_aug", default=["randomflip", "resizedcrop"], type=list)
-    # parser.add_argument("--train_aug", default=["rotate"], type=list)
-    parser.add_argument("--train_aug", default=[], type=list)
+    parser.add_argument("--train_aug", default=["rotate", "resizedcrop"], type=list)
+    # parser.add_argument("--train_aug", default=[], type=list)
     parser.add_argument("--test_aug", default=[], type=list)
-    # parser.add_argument("--img_size", default=[448, 448], type=list, help="h_w")
+    # parser.add_argument("--img_size", default=[352, 224], type=list, help="h_w")
+    # parser.add_argument("--img_size", default=[320, 320], type=list, help="h_w")
+    # parser.add_argument("--img_size", default=[768, 512], type=list, help="h_w")
     parser.add_argument("--img_size", default=[224, 224], type=list, help="h_w")
     parser.add_argument("--batch_size", default=64, type=int)
     # parser.add_argument("--batch_size", default=2, type=int)
     # optimizer, default SGD
-    parser.add_argument("--lr", default=0.01, type=float)
+    parser.add_argument("--lr", default=0.001, type=float)
     parser.add_argument("--momentum", default=0.9, type=float)
-    parser.add_argument("--w_d", default=0.01, type=float, help="weight_decay")
+    parser.add_argument("--w_d", default=0.02, type=float, help="weight_decay")
     parser.add_argument("--warmup_epoch", default=1, type=int)
-    parser.add_argument("--total_epoch", default=50, type=int)
+    parser.add_argument("--total_epoch", default=20, type=int)
     parser.add_argument("--print_freq", default=100, type=int)
     args = parser.parse_args()
     return args
     
 
-def train(i, args, model, train_loader, optimizer, warmup_scheduler):
+def train(i, args, model, train_loader, optimizer, warmup_scheduler, scheduler):
     model.train()
     epoch_begin = time.time()
     for index, data in enumerate(train_loader):
@@ -73,9 +75,13 @@ def train(i, args, model, train_loader, optimizer, warmup_scheduler):
                 float(t)
             ))
 
+        if index % 10000 == 0:
+            torch.save(model.state_dict(), "checkpoint/{}/epoch_{}_{}.pth".format(args.model, i, index))
         if warmup_scheduler and i <= args.warmup_epoch:
             warmup_scheduler.step()
-        
+        else:
+            scheduler.step()
+
     
     t = time.time() - epoch_begin
     print("Epoch {} training ends, total {:.2f}s".format(i, t))
@@ -94,7 +100,7 @@ def val(i, args, model, test_loader, test_file):
 
         with torch.no_grad():
             logit = model(img)
-            logit = torch.mean(logit, -1)
+            # logit = torch.mean(logit, -1)
 
         result = logit.cpu().detach().numpy().tolist()
         # result = nn.Sigmoid()(logit).cpu().detach().numpy().tolist()
@@ -143,12 +149,14 @@ def main():
     if args.dataset == "Lane":
         train_file = ["train_label_805/rows_train.npy"]
         test_file = ["train_label_805/rows_test.npy"]
-        step_size = 1
+        step_size = 2000
 
     train_dataset = DataSet(train_file, args.train_aug, args.img_size, args.dataset, args.datadir, args.num_cls, True)
     test_dataset = DataSet(test_file, args.test_aug, args.img_size, args.dataset, args.datadir, args.num_cls,  False)
     train_loader = DataLoader(train_dataset, batch_size=args.batch_size, shuffle=True, num_workers=8)
     test_loader = DataLoader(test_dataset, batch_size=args.batch_size, shuffle=False, num_workers=8)
+
+    # step_size = int(len(train_loader))
 
     # optimizer and warmup
     backbone, classifier = [], []
@@ -163,7 +171,7 @@ def main():
             {'params': classifier, 'lr': args.lr * 10}
         ],
         momentum=args.momentum, weight_decay=args.w_d)    
-    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=0.5)
+    scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=step_size, gamma=0.9)
     
     iter_per_epoch = len(train_loader)
     if args.warmup_epoch > 0:
@@ -173,12 +181,12 @@ def main():
 
     # training and validation
     for i in range(1, args.total_epoch + 1):
-        train(i, args, model, train_loader, optimizer, warmup_scheduler)
+        train(i, args, model, train_loader, optimizer, warmup_scheduler, scheduler)
         if not os.path.isdir("checkpoint"):
             os.makedirs("checkpoint")
         torch.save(model.state_dict(), "checkpoint/{}/epoch_{}.pth".format(args.model, i))
         val(i, args, model, test_loader, test_file)
-        scheduler.step()
+        # scheduler.step()
 
 
 if __name__ == "__main__":

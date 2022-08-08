@@ -17,8 +17,6 @@ model_urls = {
 }
 
 
-
-
 class ResNet_CSRA(ResNet):
     arch_settings = {
         18: (BasicBlock, (2, 2, 2, 2)),
@@ -38,6 +36,8 @@ class ResNet_CSRA(ResNet):
         self.loss_func = F.binary_cross_entropy_with_logits
         self.loss_ce = nn.CrossEntropyLoss()
         self.softxmax = nn.Softmax(dim=1)
+        self.denom = 0.0000001
+        self.maxom = 0.9999999
 
     def backbone(self, x):
         x = self.conv1(x)
@@ -75,36 +75,44 @@ class ResNet_CSRA(ResNet):
 
         # 设置最大值最小值
         target_s[target_s > 0] = 1
-        logit_s[logit_s < 0.0000001] = 0.0000001
-        logit_s[logit_s > 0.9999999] = 0.9999999
+        logit_s[logit_s < self.denom] = self.denom
+        logit_s[logit_s > self.maxom] = self.maxom
 
         loss_l = -1 * torch.mean(target_s * torch.log(logit_s) + (1 - target_s) * torch.log(1 - logit_s))
-
-        # target_m = torch.mean(target_s, 1)
-        # target_m = torch.argmax(target_m, -1)
-        # logit_m = torch.mean(logit_s, 1)
-        # loss_ce = self.loss_ce(logit_m, target_m)
-
         return loss_l
 
     def loss_func_lee(self, logit, target):
         target = target.unsqueeze(-1)
-        loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit + 0.0000001)) / (torch.sum((1 - target)) + 0.0000001)
-        pred_t = torch.sum(target * (logit - 0.00000001), 1)
-        loss_t = -1 * torch.mean(torch.log(pred_t + 0.0000001))
-        # if torch.isnan(loss_f) or torch.isnan(loss_t):
-        #     print(loss_f, loss_t, target.max())
-
+        loss_f = -1 * torch.sum((1 - target) * torch.log(1 - logit + self.denom)) / (torch.sum((1 - target)) + self.denom)
+        pred_t = torch.sum(target * (logit - self.denom), 1)
+        loss_t = -1 * torch.mean(torch.log(pred_t + self.denom))
         return (loss_f + loss_t) / 2
+
+    def loss_focal_lee(self, logit, target, a=0.25, y=2):
+
+        target = target.unsqueeze(-1)
+        #  (1-a)*(logit)^^y*log(1 - logit)* (1 -target)
+        loss_f = -1 * torch.sum((1-a) * torch.pow(logit, y) * torch.log(1 - logit + self.denom) * (1 -target) ) / (torch.sum((1 - target)) + self.denom)
+
+        pred_t = torch.sum(target * (logit - self.denom), 1)
+        # pred_t[pred_t < self.denom] = self.denom
+        # pred_t[pred_t > self.maxom] = self.maxom
+        # a*(1-logit)^^y*log(logit)*target
+        loss_t = -1 * torch.mean(a * torch.pow(1 - pred_t, y) * torch.log(pred_t))
+        return loss_f + loss_t
+
+
 
     def forward_train_lee(self, x, target):
         x = self.backbone(x)
         logit = self.classifier(x)
         logit = self.softxmax(logit)
         # loss = self.loss_func(logit, target, reduction="mean")
-        loss1 = self.loss_func_lee(logit, target)
+        # loss1 = self.loss_func_lee(logit, target)
         loss2 = self.loss_func_zeros(logit, target)
+        loss1 = self.loss_focal_lee(logit, target)
         loss = loss1 + 0.5 * loss2
+        # loss = loss1 + 0.5 * loss2
         # loss = loss1
         return logit, loss, loss1, loss2
 
